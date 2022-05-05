@@ -4,7 +4,7 @@ export const options = {
         info: {
             title: "API Servicio de mantenimiento TV",
             version: "1.0.0",
-            description: ""
+            description: "Sistema de órdenes de servicio para una empresa que ofrece servicios de mantenimiento e instalación de soportes para televisores"
         },
     },
     apis: ["./src/routes/*.ts"]
