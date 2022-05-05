@@ -1,5 +1,7 @@
 import {Request, Response} from "express";
 import {Tecnico} from "../entities/Tecnico";
+import {Servicio} from "../entities/Servicio";
+import {SolicitudServicio} from "../entities/SolicitudServicio";
 
 export const createTecnico = async (req: Request, res: Response) => {
     try {

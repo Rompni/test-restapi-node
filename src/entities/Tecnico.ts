@@ -11,6 +11,7 @@ import {SolicitudServicio} from "./SolicitudServicio";
 
 @Entity()
 export class Tecnico extends BaseEntity{
+
     @PrimaryGeneratedColumn()
     id!:number
 
@@ -28,6 +29,6 @@ export class Tecnico extends BaseEntity{
     @UpdateDateColumn()
     updatedAt!: Date
 
-    @OneToMany( () => SolicitudServicio, solicitudServicio => solicitudServicio.tecnico)
+    @OneToMany( () => SolicitudServicio, solicitudServicio => solicitudServicio.tecnico, {cascade: true, orphanedRowAction: "delete"})
     tecnicoToServicio!: SolicitudServicio[];
 }

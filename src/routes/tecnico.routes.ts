@@ -1,5 +1,12 @@
 import {Router} from "express";
-import {createTecnico, deleteTecnico, getTecnico, getTecnicos, updateTecnico} from "../controllers/tecnico.controllers"
+import {
+    createTecnico,
+    deleteTecnico,
+    getTecnico,
+    getTecnicos,
+    updateTecnico,
+} from "../controllers/tecnico.controllers"
+import {getSolicitudesTecnico} from "../controllers/solicitud.controllers";
 
 const router = Router();
 
@@ -44,6 +51,39 @@ const router = Router();
  *          example:
  *              msg: "Técnico no encontrado"
  *
+ *      SolicitudServicio:
+ *          type: object
+ *          properties:
+ *              token:
+ *                  type: string
+ *                  format: uuid
+ *                  description: Token generado de la solicitud
+ *              tecnicoId:
+ *                  type: number
+ *                  description: Id del tecnico asignado aleatoriamente.
+ *              servicioId:
+ *                  type: number
+ *                  description: Id del servicio que se va a ofrecer.
+ *              isFinished:
+ *                  type: boolean
+ *                  description: valida que la solicitud haya finalizado o no
+ *              createdAt:
+ *                  type: string
+ *                  format: date-time
+ *                  description: La fecha de creación de la solicitud.
+ *              updatedAt:
+ *                  type: string
+ *                  format: date-time
+ *                  description: La fecha de la ultima vez que la solicitud se actualizó.
+ *          required:
+ *              - servicioId
+ *          example:
+ *              token: "4dc113d4-6ac6-4fdb-9fd1-c214d486f0fe"
+ *              tecnicoId: 4
+ *              servicioId: 3
+ *              isFinished: false
+ *              createdAt: "2022-05-05T11:02:57.347Z"
+ *              updatedAt: "2022-05-05T11:02:57.347Z"
  *  parameters:
  *      tecnicoId:
  *          in: path
@@ -177,4 +217,29 @@ router.put('/:id', updateTecnico);
  */
 router.delete('/:id', deleteTecnico);
 
+/**
+ * @swagger
+ * /api/tecnicos/{id}/solicitudes:
+ *  get:
+ *      summary: Esta función retorna una lista de servicios técnicos asignados al técnico
+ *      tags: [Técnico]
+ *      parameters:
+ *          - $ref: '#components/parameters/tecnicoId'
+ *      responses:
+ *          200:
+ *              description: La solicitud realizada correctamente
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *
+ *          404:
+ *              description: Objecto servicio ó tecnico no encontrado.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: string
+ */
+router.get('/:id/solicitudes', getSolicitudesTecnico)
 export default router

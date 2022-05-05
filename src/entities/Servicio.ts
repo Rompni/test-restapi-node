@@ -23,6 +23,6 @@ export class Servicio extends BaseEntity{
     @UpdateDateColumn()
     updatedAt!: Date
 
-    @OneToMany( () => SolicitudServicio, solicitudServicio => solicitudServicio.servicio)
+    @OneToMany( () => SolicitudServicio, solicitudServicio => solicitudServicio.servicio, {cascade: true, orphanedRowAction: "delete"})
     tecnicoToServicio!: SolicitudServicio[];
 }
