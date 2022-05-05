@@ -8,7 +8,7 @@ async function main(){
         console.log('Database connected')
 
         app.listen(app.get('port'));
-        console.log('Server is listening on port', 3000);
+        console.log('Server is listening on port', app.get('port'));
     } catch (error) {
         console.log(error)
     }

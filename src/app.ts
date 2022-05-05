@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express';
 import morgan from "morgan";
 import cors from 'cors';
@@ -18,7 +19,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.get('/api', (_req, res) => res.send("Hola desde la API"));
-app.get('/', (_req, res) => res.send("Hola desde la API"));
+app.get('/', (_req, res) => res.send("Hola, Puedes ingresar a la documentacion con con /api/docs"));
 
 // CONFIGURACION DEL SWAGGER
 const specs = swaggerJSDoc(options);
