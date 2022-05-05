@@ -1,14 +1,18 @@
 import {Request, Response} from "express";
 import {Servicio} from "../entities/Servicio";
+import {parseId, toNewServicioEntry, toUpdateServicioEntry} from "../utils";
 
 export const createServicio = async (req: Request, res: Response) => {
     try {
-        const {name} = req.body;
-        const servicio = new Servicio();
-        servicio.name = name;
+        // VALIDAR ENTRADA DE DATO
+        const newServicio = toNewServicioEntry(req.body)
+        const {name} = newServicio;
 
-        await servicio.save();
-        res.json(servicio);
+        const addedServicio = new Servicio();
+        addedServicio.name = name;
+
+        await addedServicio.save();
+        res.json(addedServicio);
 
     }catch (e) {
         if (e instanceof Error)
@@ -28,8 +32,11 @@ export const getServicios =  async (_req: Request, res: Response) => {
 
 export const updateServicio = async (req: Request, res: Response) => {
     try {
-        const {name} = req.body
-        const servicio = await Servicio.findOneBy({id: +req.params.id});
+        // VALIDAR ENTRADA DE DATOS
+        const updateTecnico = toUpdateServicioEntry(req.body)
+        const {name} = updateTecnico
+
+        const servicio = await Servicio.findOneBy({id: parseId(req.params.id)});
 
         if(!servicio) return res.status(404).json({message: "Servicio no encontrado"})
 
@@ -47,7 +54,7 @@ export const updateServicio = async (req: Request, res: Response) => {
 
 export const getServicio = async (req: Request, res: Response) => {
     try {
-        const servicio = await Servicio.findOneBy({id: +req.params.id});
+        const servicio = await Servicio.findOneBy({id: parseId(req.params.id)});
         if(!servicio) return res.status(404).json({message: "Servicio no encontrado"})
 
         return res.json(servicio)
@@ -61,7 +68,7 @@ export const getServicio = async (req: Request, res: Response) => {
 export const deleteServicio  = async (req: Request, res: Response) => {
     try {
         const {id} = req.params
-        const result = await Servicio.delete({id: +id});
+        const result = await Servicio.delete({id: parseId(id)});
         if(result.affected === 0)
             return res.status(404).json({message: "Servicio no encontrado"});
 

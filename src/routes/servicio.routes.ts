@@ -67,7 +67,11 @@ const router = Router();
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/Servicio'
+ *                      type: string
+ *                      name: name
+ *                      description: Nombre del servicio a crear
+ *                  example:
+ *                      name: "Actualizar software de TV"
  *      responses:
  *          200:
  *              description: El objeto servicio creado correctamente.
@@ -96,7 +100,8 @@ router.post('/', createServicio);
  *                          type: array
  *                          items:
  *                              $ref: '#components/schemas/Servicio'
- *
+ *          500:
+ *              description: Error al traer la lista de servicios tecnicos.
  */
 router.get('/', getServicios);
 
@@ -121,7 +126,8 @@ router.get('/', getServicios);
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/ServicioNotFound'
- *
+ *          500:
+ *              description: Error al traer un servicio tecnico.
  */
 router.get('/:id', getServicio);
 
@@ -146,7 +152,8 @@ router.get('/:id', getServicio);
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/ServicioNotFound'
- *
+ *          500:
+ *              description: Error al momento de actualizar un servicio
  */
 router.put('/:id', updateServicio);
 
@@ -175,6 +182,8 @@ router.put('/:id', updateServicio);
  *                  application/json:
  *                      schema:
  *                          $ref: '#components/schemas/ServicioNotFound'
+ *          500:
+ *              description: Error al momento de eliminar un servicio
  *
  */
 router.delete('/:id', deleteServicio);

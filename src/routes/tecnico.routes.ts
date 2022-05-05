@@ -50,7 +50,6 @@ const router = Router();
  *                  description: un mensaje para cuando el objecto tecnico no fue encontrado
  *          example:
  *              msg: "Técnico no encontrado"
- *
  *      SolicitudServicio:
  *          type: object
  *          properties:
@@ -84,6 +83,7 @@ const router = Router();
  *              isFinished: false
  *              createdAt: "2022-05-05T11:02:57.347Z"
  *              updatedAt: "2022-05-05T11:02:57.347Z"
+ *
  *  parameters:
  *      tecnicoId:
  *          in: path
@@ -105,7 +105,11 @@ const router = Router();
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/Tecnico'
+ *                      type: string
+ *                      name: name
+ *                      description: Nombre completo del tecnico
+ *                  example:
+ *                      name: "Andres Navarro"
  *      responses:
  *          200:
  *              description: El objeto tecnico creado correctamente.
@@ -134,7 +138,8 @@ router.post('/', createTecnico);
  *                          type: array
  *                          items:
  *                              $ref: '#components/schemas/Tecnico'
- *
+ *          500:
+ *              description: Error al traer la lista de tecnicos.
  */
 router.get('/', getTecnicos);
 
@@ -159,7 +164,8 @@ router.get('/', getTecnicos);
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/TecnicoNotFound'
- *
+ *          500:
+ *              description: Error al traer un tecnico.
  */
 router.get('/:id', getTecnico);
 
@@ -184,6 +190,8 @@ router.get('/:id', getTecnico);
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/TecnicoNotFound'
+ *          500:
+ *              description: Error al actualizar un tecnico
  *
  */
 router.put('/:id', updateTecnico);
@@ -213,6 +221,8 @@ router.put('/:id', updateTecnico);
  *                  application/json:
  *                      schema:
  *                          $ref: '#components/schemas/TecnicoNotFound'
+ *          500:
+ *              description: Error al eliminar un tecnico
  *
  */
 router.delete('/:id', deleteTecnico);
@@ -233,6 +243,7 @@ router.delete('/:id', deleteTecnico);
  *                      schema:
  *                          type: array
  *                          items:
+ *                              $ref: '#components/schemas/SolicitudServicio'
  *
  *          404:
  *              description: Objecto servicio ó tecnico no encontrado.
@@ -240,6 +251,12 @@ router.delete('/:id', deleteTecnico);
  *                  application/json:
  *                      schema:
  *                          type: string
+ *                          name: msg
+ *                      example:
+ *                          msg: "Tecnico no encontrado"
+ *          500:
+ *              description: Error al traer las solicitudes
+ *
  */
 router.get('/:id/solicitudes', getSolicitudesTecnico)
 export default router

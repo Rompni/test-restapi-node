@@ -2,11 +2,12 @@ import {Request, Response} from "express";
 import {Servicio} from "../entities/Servicio";
 import {Tecnico} from "../entities/Tecnico";
 import {SolicitudServicio} from "../entities/SolicitudServicio";
+import {parseId} from "../utils";
 
 export const createSolicitud = async (req: Request, res: Response) => {
     try {
         const {idServicio} = req.body;
-        const servicio = await Servicio.findOneBy({id: +idServicio});
+        const servicio = await Servicio.findOneBy({id: parseId(idServicio)});
 
         if(!servicio) return res.status(404).json({message: `Servicio con id ${idServicio} no encontrado`})
 
@@ -38,7 +39,7 @@ export const createSolicitud = async (req: Request, res: Response) => {
 
 export const getSolicitudesTecnico = async (req: Request, res: Response) => {
     try{
-        const tecnico = await Tecnico.findOneBy({id: +req.params.id});
+        const tecnico = await Tecnico.findOneBy({id: parseId(req.params.id)});
         if(!tecnico) return res.status(404).json({message: "Tecnico no encontrado"})
 
         const solicitudes = await SolicitudServicio.findBy({tecnicoId: tecnico.id})

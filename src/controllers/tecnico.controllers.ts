@@ -1,16 +1,18 @@
 import {Request, Response} from "express";
 import {Tecnico} from "../entities/Tecnico";
-import {Servicio} from "../entities/Servicio";
-import {SolicitudServicio} from "../entities/SolicitudServicio";
+import {parseId, toNewTecnicoEntry, toUpdateTecnicoEntry} from "../utils";
 
 export const createTecnico = async (req: Request, res: Response) => {
     try {
-        const {name} = req.body;
-        const tecnico = new Tecnico();
-        tecnico.name = name;
+        // VALIDAR ENTRADA DE DATOS
+        const newTecnico = toNewTecnicoEntry(req.body)
+        const {name} = newTecnico;
 
-        await tecnico.save()
-        res.json(tecnico)
+        const addedTecnico = new Tecnico();
+        addedTecnico.name = name;
+
+        await addedTecnico.save()
+        res.json(addedTecnico)
 
     }catch (e) {
         if (e instanceof Error)
@@ -30,15 +32,18 @@ export const getTecnicos =  async (_req: Request, res: Response) => {
 
 export const updateTecnico = async (req: Request, res: Response) => {
     try {
-        const {name, active} = req.body
-        const tecnico = await Tecnico.findOneBy({id: +req.params.id});
+
+        // VALIDAR ENTRADA DE DATOS
+        const updateTecnico = toUpdateTecnicoEntry(req.body)
+        const {name, active} = updateTecnico
+
+        const tecnico = await Tecnico.findOneBy({id: parseId(req.params.id)});
 
         if(!tecnico) return res.status(404).json({message: "Tecnico no encontrado"})
 
-        if(active)
-            tecnico.active = active
+        if(active !== undefined) tecnico.active = active
+        if(name !== undefined) tecnico.name = name
 
-        tecnico.name = name
         await tecnico.save();
 
         return res.json(tecnico)
@@ -52,7 +57,7 @@ export const updateTecnico = async (req: Request, res: Response) => {
 
 export const getTecnico = async (req: Request, res: Response) => {
     try {
-        const tecnico = await Tecnico.findOneBy({id: +req.params.id});
+        const tecnico = await Tecnico.findOneBy({id: parseId(req.params.id)});
         if(!tecnico) return res.status(404).json({message: "Tecnico no encontrado"})
 
         return res.json(tecnico)
@@ -66,7 +71,7 @@ export const getTecnico = async (req: Request, res: Response) => {
 export const deleteTecnico  = async (req: Request, res: Response) => {
     try {
         const {id} = req.params
-        const result = await Tecnico.delete({id: +id});
+        const result = await Tecnico.delete({id: parseId(id)});
         if(result.affected === 0)
             return res.status(404).json({message: "Tecnico no encontrado"});
 
@@ -77,3 +82,5 @@ export const deleteTecnico  = async (req: Request, res: Response) => {
             return res.status(500).json({message: e.message});
     }
 }
+
+//FUNCIONES PARA REUTILIZAR
