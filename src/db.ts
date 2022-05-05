@@ -1,4 +1,7 @@
 import {DataSource} from 'typeorm'
+import {Tecnico} from "./entities/Tecnico";
+import {Servicio} from "./entities/Servicio";
+import {SolicitudServicio} from "./entities/SolicitudServicio";
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -7,5 +10,6 @@ export const AppDataSource = new DataSource({
     password: "postgres",
     port: 5432,
     database: "typeormdb",
-    entities: []
+    entities: [Tecnico, Servicio, SolicitudServicio],
+    synchronize: true
 });
