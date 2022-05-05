@@ -11,18 +11,18 @@ const router = Router();
  *          type: object
  *          properties:
  *              id:
- *                  type: id
- *                  description: El ID autogenerado del tecnico.
+ *                  type: number
+ *                  description: El ID autogenerado del técnico.
  *              name:
  *                  type: string
- *                  description: El nombre completo del tecnico.
+ *                  description: El nombre completo del técnico.
  *              active:
  *                  type: boolean
- *                  description: Te permite saber si el tecnico esta activo.
+ *                  description: Te permite saber si el técnico esta activo.
  *              createdAt:
  *                  type: string
  *                  format: date-time
- *                  description: La fecha de creación del tecnico.
+ *                  description: La fecha de creación del técnico.
  *              updatedAt:
  *                  type: string
  *                  format: date-time
@@ -31,7 +31,7 @@ const router = Router();
  *              - name
  *          example:
  *              id: 22
- *              name: Andres Navarro
+ *              name: "Andres Navarro"
  *              active: true
  *              createdAt: "2022-05-05T05:34:43.051Z"
  *              updatedAt: "2022-05-05T05:34:43.051Z"
@@ -42,7 +42,7 @@ const router = Router();
  *                  type: string
  *                  description: un mensaje para cuando el objecto tecnico no fue encontrado
  *          example:
- *              msg: "Tecnico no encontrado"
+ *              msg: "Técnico no encontrado"
  *
  *  parameters:
  *      tecnicoId:
@@ -51,15 +51,15 @@ const router = Router();
  *          required: true
  *          schema:
  *              type: number
- *          description: el id del tecnico
+ *          description: El id del técnico
  */
 
 /**
  * @swagger
  * /api/tecnicos:
  *  post:
- *      summary: Esta funcion crea un tecnico
- *      tags: [Tecnico]
+ *      summary: Esta funcion crea un técnico
+ *      tags: [Técnico]
  *      requestBody:
  *          required: true
  *          content:
@@ -83,11 +83,11 @@ router.post('/', createTecnico);
  * @swagger
  * /api/tecnicos:
  *  get:
- *      summary: Esta funcion retorna una lista de tecnicos
- *      tags: [Tecnico]
+ *      summary: Esta funcion retorna una lista de técnicos
+ *      tags: [Técnico]
  *      responses:
  *          200:
- *              description: lista de tecnicos
+ *              description: lista de técnicos
  *              content:
  *                  application/json:
  *                      schema:
@@ -102,8 +102,8 @@ router.get('/', getTecnicos);
  * @swagger
  * /api/tecnicos/{id}:
  *  get:
- *      summary: Esta funcion retorna un tecnico
- *      tags: [Tecnico]
+ *      summary: Esta funcion retorna un técnico
+ *      tags: [Técnico]
  *      parameters:
  *          - $ref: '#components/parameters/tecnicoId'
  *      responses:
@@ -127,8 +127,8 @@ router.get('/:id', getTecnico);
  * @swagger
  * /api/tecnicos/{id}:
  *  put:
- *      summary: Esta funcion actualiza un tecnico
- *      tags: [Tecnico]
+ *      summary: Esta funcion actualiza un técnico
+ *      tags: [Técnico]
  *      parameters:
  *          - $ref: '#components/parameters/tecnicoId'
  *      responses:
@@ -152,12 +152,12 @@ router.put('/:id', updateTecnico);
  * @swagger
  * /api/tecnicos/{id}:
  *  delete:
- *      summary: Esta funcion elimina un tecnico por Id.
- *      tags: [Tecnico]
+ *      summary: Esta función elimina un técnico por Id.
+ *      tags: [Técnico]
  *      parameters:
  *          - $ref: '#components/parameters/tecnicoId'
  *      responses:
- *          204:
+ *          200:
  *              description: Objecto tecnico eliminado correctamente
  *              content:
  *                  application/json:

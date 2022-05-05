@@ -29,7 +29,6 @@ export const getTecnicos =  async (_req: Request, res: Response) => {
 export const updateTecnico = async (req: Request, res: Response) => {
     try {
         const {name, active} = req.body
-        console.log(name, active)
         const tecnico = await Tecnico.findOneBy({id: +req.params.id});
 
         if(!tecnico) return res.status(404).json({message: "Tecnico no encontrado"})
@@ -69,7 +68,7 @@ export const deleteTecnico  = async (req: Request, res: Response) => {
         if(result.affected === 0)
             return res.status(404).json({message: "Tecnico no encontrado"});
 
-        return res.status(204).json({message: "Tecnico eliminado correctamente"})
+        return res.status(200).json({message: "Tecnico eliminado correctamente"})
 
     }catch (e) {
         if (e instanceof Error)
