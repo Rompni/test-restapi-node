@@ -17,7 +17,9 @@ export class Tecnico extends BaseEntity{
     @Column()
     name!: string
 
-    @Column()
+    @Column({
+        default: true
+    })
     active!: boolean
 
     @CreateDateColumn()
